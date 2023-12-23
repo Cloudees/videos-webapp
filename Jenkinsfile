@@ -26,14 +26,6 @@ pipeline {
             }
         }
 
-        stage("Build Go Binary") {
-            steps {
-                script {
-                    gv.buildGoBinary()
-                }
-            }
-        }
-
         stage("Build Docker Image") {
             steps {
                 script {
