@@ -19,11 +19,6 @@ def incrementVersion(currentVersion) {
     return "${versionParts[0]}.${versionParts[1]}.$newPatchVersion"
 }
 
-def buildGoBinary() {
-    echo "Compiling and Building the Application..."
-    sh "go build -o videos-microservice-${IMAGE_VERSION}"
-}
-
 def buildDockerImage() {
     echo "Building the Docker Image..."
     sh "docker build -t oumaymacharrad/videos-microservice:${IMAGE_VERSION} ."
