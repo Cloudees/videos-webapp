@@ -6,7 +6,7 @@ def incrementDataSeedJobVersion(){
     // Updating the Version in the Source Code
     sh "sed -i 's/Videos Catalog: \"$currentVersion\"/Videos Catalog: \"$newVersion\"/' index.php"
     // Commit the Changes
-    sh "git remote add oumayma git@github.com:ayadi-mohamed/videos-webapp.git"
+    sh "git remote add oumayma git@github.com:Cloudees/videos-webapp.git"
     sh "git checkout main"
     sh "git commit -am 'Increment Version to $newVersion'"
     // Setting the New Version as an Environment Variable for Later Use
