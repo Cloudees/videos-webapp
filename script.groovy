@@ -1,12 +1,12 @@
 def incrementDataSeedJobVersion(){
     echo "Incrementing the Application Version"
-    def currentVersion = sh(script: "grep 'const version' app.go | awk '{print \$NF}' | tr -d '\"'", returnStdout: true).trim()
+    def currentVersion = sh(script: "grep 'Videos Catalog: ' index.php | sed -n 's/.*Videos Catalog: \\\"\\(.*\\)\\\".*/\\1/p'", returnStdout: true).trim()
     // Incrementing the Version
     def newVersion = incrementVersion(currentVersion)
     // Updating the Version in the Source Code
-    sh "sed -i 's/const version = \"$currentVersion\"/const version = \"$newVersion\"/' app.go"
+    sh "sed -i 's/Videos Catalog: \"$currentVersion\"/Videos Catalog: \"$newVersion\"/' index.php"
     // Commit the Changes
-    sh "git remote add oumayma git@github.com:ayadi-mohamed/videos-microservice.git"
+    sh "git remote add oumayma git@github.com:ayadi-mohamed/videos-webapp.git"
     sh "git checkout main"
     sh "git commit -am 'Increment Version to $newVersion'"
     // Setting the New Version as an Environment Variable for Later Use
