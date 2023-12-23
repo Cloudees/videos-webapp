@@ -68,32 +68,37 @@
   <?php
   $playlistApiUrl = getenv('PLAYLIST_API');
   ?>
-  <script>
-  var model = {
-    playlist: [],
-  };
+<?php
+// Fetch playlist data from API
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $playlistApiUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$playlistData = curl_exec($ch);
+curl_close($ch);
 
-  var app = angular.module('videos', []);
+// Convert the JSON response to a PHP array
+$playlistArray = json_decode($playlistData, true);
+echo json_encode($playlistArray);
+?>
 
-  // Create a configuration module to hold the API URL
-  app.constant('config', {
-    playlistApiUrl: '<?php echo $playlistApiUrl; ?>'
-  });
+<script>
+var model = {
+  playlist: [],
+};
 
-  app.controller('videosController', function ($scope, $http, config) {
+var app = angular.module('videos', []);
 
-    $http.get(config.playlistApiUrl)
-      .then(function (response) {
-        console.log(response);
-        //$scope.model = model;
-        for (i = 0; i < response.data.length; ++i) {
-          model.playlist.push(response.data[i]);
-        }
-        $scope.playlist = response.data;
-      });
-  });
+app.controller('videosController', function ($scope) {
+  // Get the PHP array and convert it to a JavaScript array
+  model.playlist = <?php echo json_encode($playlistArray); ?>;
 
-  </script>
+  // Assign the playlist to the AngularJS scope
+  $scope.playlist = model.playlist;
+
+});
+
+</script>
+
 </body>
 
 </html>
