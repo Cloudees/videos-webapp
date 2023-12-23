@@ -78,7 +78,6 @@ curl_close($ch);
 
 // Convert the JSON response to a PHP array
 $playlistArray = json_decode($playlistData, true);
-echo json_encode($playlistArray);
 ?>
 
 <script>
